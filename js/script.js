@@ -201,7 +201,7 @@ const createModalDivs = (user) => {
         const clicked = event.target;
         const modalButton = document.querySelectorAll('.modal-close- btn');
         if(clicked.tagName === 'BUTTON'|| clicked.tagName === "STRONG" ) {
-            modalContainer.style.display = 'none';
+            modalContainer.remove();
         }
     });
 };
