@@ -26,7 +26,7 @@ const setAttributes = (ele, attrs) => {
 
 // Search section - dynamically add search input to DOM
 
-const createSearch = () => {                                                       // Creates form and sets attributres
+const createSearch = () => {                                                     // Creates form and sets attributres
     const createForm = document.createElement('form');
     const form = document.getElementsByTagName('FORM');                         // grabs form 
     const inputSearch = document.createElement('INPUT');                        // Input ele for Search
@@ -57,7 +57,6 @@ const search = (text, list) => {
         //list[i].style.display = "none";
         if (list[i].name.first.includes(text.toLowerCase())) {
           storedUsers.push(list[i]);
-          console.log(storedUsers)
         };
       };
     createGalleryCard(storedUsers);
@@ -121,13 +120,12 @@ const createGalleryCard = (users) => {                                          
 
 galleryDiv.addEventListener('click', (event) => {
     const cards = Array.from(document.querySelectorAll('.card'));                       // Creates an array of all the divs with class of card
-    if (event.target.className === 'card'){
-        let user = cards.indexOf(event.target);                                        // Uses indexOf to target index number of event.click
-        console.log('clicked');
+    if (event.target.closest('.card')) {
+        let user = users[cards.indexOf(event.target.closest('.card'))];                 // Uses indexOf to target index number of event.click
         createModalDivs(user);
-    }
-    
+    }  
 });
+
 
 
 // Modal section - creating modal div's and appending to Body dynamically, adding modal elements to modal div's
@@ -186,7 +184,7 @@ const createModalDivs = (user) => {
 
     modalInfoContainer.appendChild(createPara3);
     createPara3.setAttribute("class", "modal-text");
-    createPara3.innerText = `${user.phone}`;
+    createPara3.innerText = `${user.phone}`;//'(' + `${user.phone}`.slice(0,3) + ')' + `${user.phone}`.slice(4, 7) + '-' + `${user.phone}`.slice(7,10);
 
     modalInfoContainer.appendChild(createPara4);
     createPara4.setAttribute("class", "modal-text");
@@ -195,9 +193,17 @@ const createModalDivs = (user) => {
 
     modalInfoContainer.appendChild(createPara5);
     createPara5.setAttribute("class", "modal-text");
-    createPara5.innerText = "10/21/2015";
+    createPara5.innerText = 'Birthday: ' + `${user.dob.date}`.slice(0, 10);
 
-
+    const modalContainer = document.querySelector('.modal-container');
+    
+    modalContainer.addEventListener('click', (event) => {
+        const clicked = event.target;
+        const modalButton = document.querySelectorAll('.modal-close- btn');
+        if(clicked.tagName === 'BUTTON'|| clicked.tagName === "STRONG" ) {
+            modalContainer.style.display = 'none';
+        }
+    });
 };
 //createModalDivs();
 
