@@ -16,14 +16,15 @@ fetch(url)
     .catch(err => console.log(err));
 
 
+ // Set attributes helper function per stack overflow
 
-// Search section - dynamically add search input to DOM
-
-const setAttributes = (ele, attrs) => {                                            // Set attributes helper function per stack overflow
+const setAttributes = (ele, attrs) => {                                           
     for(let key in attrs) {
         ele.setAttribute(key, attrs[key]);
     };
 };
+
+// Search section - dynamically add search input to DOM
 
 const createSearch = () => {                                                       // Creates form and sets attributres
     const createForm = document.createElement('form');
@@ -47,6 +48,28 @@ const createSearch = () => {                                                    
     });
 };
 createSearch();
+
+// Search Functionality
+
+const search = (text, list) => {
+    let storedUsers = [];
+    for (let i = 0; i < list.length; i++) {
+        //list[i].style.display = "none";
+        if (list[i].name.first.includes(text.toLowerCase())) {
+          storedUsers.push(list[i]);
+          console.log(storedUsers)
+        };
+      };
+    createGalleryCard(storedUsers);
+};
+
+// Event listener for search button
+document.getElementById('search-submit').addEventListener('click', (event) => {
+    event.preventDefault();
+    text = document.getElementById('search-input').value;
+    search(text, users);
+});
+
 
 // Gallery section - creating div's and appending to gallery div dynamically
 
@@ -95,8 +118,15 @@ const createGalleryCard = (users) => {                                          
 
 
 // Event listener to listen on every 'card' div and popup modal when clicked
+
 galleryDiv.addEventListener('click', (event) => {
-    createModalDivs(event.target)
+    const cards = Array.from(document.querySelectorAll('.card'));                       // Creates an array of all the divs with class of card
+    if (event.target.className === 'card'){
+        let user = cards.indexOf(event.target);                                        // Uses indexOf to target index number of event.click
+        console.log('clicked');
+        createModalDivs(user);
+    }
+    
 });
 
 
@@ -105,14 +135,13 @@ galleryDiv.addEventListener('click', (event) => {
 const createModalDivs = (user) => {
     const bodyModalDiv = document.createElement('div');
     const body = document.body;
-    body.appendChild(bodyModalDiv);                                             // Create a 'modal-container' div inside body
+    body.appendChild(bodyModalDiv);                                                     // Create a 'modal-container' div inside body
     bodyModalDiv.setAttribute("class", "modal-container");
-
-    const innerModalDiv = document.createElement('div');                        // Create a inner 'modal' div inside 'modal-conainter'
+    const innerModalDiv = document.createElement('div');                                // Create a inner 'modal' div inside 'modal-conainter'
     const btn = document.createElement('BUTTON');
     bodyModalDiv.appendChild(innerModalDiv);
     innerModalDiv.setAttribute("class", "modal");
-    innerModalDiv.appendChild(btn);                                             // Append button to 'modal' div and set attrs
+    innerModalDiv.appendChild(btn);                                                     // Append button to 'modal' div and set attrs
     setAttributes(btn, {
         "type": "button",
         "id": "modal-close-btn",
@@ -120,7 +149,7 @@ const createModalDivs = (user) => {
     });
     btn.innerHTML = "<strong>X</strong>"
 
-    const modalInfoContainer = document.createElement('div');                   // Create 'modal-info-container' div and append to 'modal' div
+    const modalInfoContainer = document.createElement('div');                           // Create 'modal-info-container' div and append to 'modal' div
     const createH3 = document.createElement('h3');
     const createPara = document.createElement('p');
     const createPara2 = document.createElement('p');
@@ -130,7 +159,7 @@ const createModalDivs = (user) => {
     const createHr = document.createElement('hr');
     const img = document.createElement('img');
     innerModalDiv.appendChild(modalInfoContainer);
-    modalInfoContainer.setAttribute("class", "modal-info-container");           // Create and append img, h3, 5 paragraphs, and <hr> to 'modal-info-container'
+    modalInfoContainer.setAttribute("class", "modal-info-container");                  // Create and append img, h3, 5 paragraphs, and <hr> to 'modal-info-container'
     modalInfoContainer.appendChild(img);
     setAttributes(img, {
         "class": "modal-img",
@@ -178,11 +207,12 @@ const createModalDivs = (user) => {
 
 
 
+// Helper functions to create elements and append
 
-    function createNode(element) {
-        return document.createElement(element); // Create the type of element you pass in the parameters
-      }
+function createNode(element) {
+    return document.createElement(element); // Create the type of element you pass in the parameters
+};
     
-      function append(parent, el) {
-        return parent.appendChild(el); // Append the second parameter(element) to the first one
-      }
+function append(parent, el) {
+    return parent.appendChild(el); // Append the second parameter(element) to the first one
+};
