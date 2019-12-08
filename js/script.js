@@ -208,11 +208,6 @@ const createModalDivs = (user) => {
 //createModalDivs();
 
 
-
-//
-
-
-
 // Helper functions to create elements and append
 
 function createNode(element) {
