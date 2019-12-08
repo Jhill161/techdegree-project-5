@@ -49,7 +49,7 @@ const createSearch = () => {                                                    
 };
 createSearch();
 
-// Search Functionality
+// Search Functionality  - STILL NOT WORKING
 
 const search = (text, list) => {
     let storedUsers = [];
