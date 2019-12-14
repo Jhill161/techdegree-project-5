@@ -1,3 +1,3 @@
 # Public API Requests Project
-
+<a href="https://www.jasonhill.io/techdegree-project-3/">Link to Live Demo</a>
 This project uses vanilla JavaScript to dynamically create gallery cards and modal's on click of card, and displays random users as well as associated information in them.  Users are generated at random each load of the page via a public API request made for 12 users.  In this project I utilized template literals to display the data desired inside the created cards and modal.  API request was made via 'fetch'.  When dynamically creating the markup, I used DOM manipulation methods to do so to continue to reinforce these skills, however I could have used innerHTML() along with the markup text, to do so much easier.
